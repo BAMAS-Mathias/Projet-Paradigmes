@@ -7,6 +7,9 @@ const CreateEmployee = () => {
     name: "",
     position: "",
     level: "",
+    salary: Number,
+    description: "",
+    surname: "",
   });
 
   const [isCreating, setIsCreating] = useState(false);
@@ -34,7 +37,7 @@ const CreateEmployee = () => {
 
   return (
     <form className="flex flex-col p-5 gap-y-2 w-fit">
-      <p className="font-bold text-2xl self-center">Créer un employé</p>
+      <p className="font-bold text-2xl self-center mb-2">Créer un employé</p>
       <input
         type="text"
         name="name"
@@ -47,12 +50,14 @@ const CreateEmployee = () => {
         name="surname"
         placeholder="Prénom"
         className="w-max text-[#000000] rounded-md p-1"
+        onChange={handleChange}
       />
       <input
         type="text"
         name="salary"
         placeholder="Salaire"
         className="w-max text-[#000000] rounded-md p-1"
+        onChange={handleChange}
       />
       <input
         type="text"
@@ -66,6 +71,7 @@ const CreateEmployee = () => {
         name="description"
         placeholder="Description"
         className="w-max text-[#000000] rounded-md p-1"
+        onChange={handleChange}
       />
       <select
         name="level"
@@ -73,13 +79,13 @@ const CreateEmployee = () => {
         className="w-max text-[#000000] rounded-md p-1"
       >
         <option value="">Select Level</option>
-        <option value="Junior">Junior</option>
-        <option value="Mid">Mid</option>
-        <option value="Senior">Senior</option>
+        <option value="junior">Junior</option>
+        <option value="mid">Mid</option>
+        <option value="senior">Senior</option>
       </select>
       <button
         type="button"
-        className="w-max self-center"
+        className="w-max self-center mt-2"
         onClick={() =>
           createEmployee(employee.name, employee.position, employee.level)
         }
