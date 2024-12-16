@@ -85,7 +85,10 @@ const CreateEmployee = () => {
       </select>
       <button
         type="button"
-        className="w-max self-center mt-2"
+        className={
+          "w-full self-center mt-2 bg-white bg-opacity-10 rounded-lg p-2 " +
+          (isCreating && "opacity-50")
+        }
         onClick={() =>
           createEmployee(employee.name, employee.position, employee.level)
         }
