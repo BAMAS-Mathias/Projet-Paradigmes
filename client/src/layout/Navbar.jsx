@@ -10,7 +10,7 @@ const Navbar = () => {
 
       <div className="flex justify-self-center justify-evenly w-full">
         <a>Liste employés</a>
-        <a>Créé un employé</a>
+        <a href="/employee/create">Créé un employé</a>
         <a></a>
       </div>
     </div>
