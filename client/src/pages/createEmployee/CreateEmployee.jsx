@@ -34,37 +34,43 @@ const CreateEmployee = () => {
 
   return (
     <form className="flex flex-col p-5 gap-y-2 w-fit">
-      <p className="font-bold text-2xl">Créer un employé</p>
+      <p className="font-bold text-2xl self-center">Créer un employé</p>
       <input
         type="text"
         name="name"
         placeholder="Nom"
         onChange={handleChange}
-        className="w-max text-[#000000]"
+        className="w-max text-[#000000] rounded-md p-1"
       />
       <input
         type="text"
         name="surname"
         placeholder="Prénom"
-        className="w-max text-[#000000]"
+        className="w-max text-[#000000] rounded-md p-1"
       />
       <input
         type="text"
         name="salary"
         placeholder="Salaire"
-        className="w-max text-[#000000]"
+        className="w-max text-[#000000] rounded-md p-1"
       />
       <input
         type="text"
         name="position"
         placeholder="Position"
-        className="w-max text-[#000000]"
+        className="w-max text-[#000000] rounded-md p-1"
         onChange={handleChange}
+      />
+      <input
+        type="text"
+        name="description"
+        placeholder="Description"
+        className="w-max text-[#000000] rounded-md p-1"
       />
       <select
         name="level"
         onChange={handleChange}
-        className="w-max text-[#000000]"
+        className="w-max text-[#000000] rounded-md p-1"
       >
         <option value="">Select Level</option>
         <option value="Junior">Junior</option>
@@ -78,7 +84,7 @@ const CreateEmployee = () => {
           createEmployee(employee.name, employee.position, employee.level)
         }
       >
-        Créer
+        {isCreating ? "Création..." : "Créer"}
       </button>
     </form>
   );
