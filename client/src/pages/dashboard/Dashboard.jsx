@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Employee from "./Employee";
-
+import "./employee.css";
 const Dashboard = () => {
   const [userList, setUserList] = useState([]);
 
@@ -17,13 +17,14 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
-      {userList.map((employee, index) => (
-        <div key={index}>
-          <Employee employee={employee} />
-        </div>
-      ))}
-    </div>
+    <>
+      <input type="text" className="opacity-100 h-10 min-w-[450px] mb-5" />
+      <div className="employee-grid">
+        {userList.map((employee, index) => (
+          <Employee key={index} employee={employee} />
+        ))}
+      </div>
+    </>
   );
 };
 

@@ -1,0 +1,6 @@
+.employee-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 450px);
+  grid-template-rows: repeat(auto-fit, 100px);
+  gap: 10px;
+}

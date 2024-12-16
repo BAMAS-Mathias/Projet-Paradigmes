@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
       className="min-h-[100vh] min-w-[100vw] bg-[#171716] text-white"
     >
       <Navbar />
-      {children}
+      <div className="px-12 py-12">{children}</div>
     </div>
   );
 };
