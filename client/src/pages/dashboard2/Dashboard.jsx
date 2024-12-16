@@ -108,6 +108,11 @@ const Dashboard = () => {
                 onChange={(e) => handleCheckboxChange(e, "junior")}
               ></input>
               <p>Junior</p>
+              <span
+                className={
+                  "rounded-full ml-auto mt-1 opacity-75 size-4 bg-green-500"
+                }
+              ></span>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <input
@@ -116,6 +121,11 @@ const Dashboard = () => {
                 onChange={(e) => handleCheckboxChange(e, "mid")}
               ></input>
               <p>Intermediare</p>
+              <span
+                className={
+                  "rounded-full ml-auto mt-1 opacity-75 size-4 bg-yellow-500"
+                }
+              ></span>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <input
@@ -124,6 +134,11 @@ const Dashboard = () => {
                 onChange={(e) => handleCheckboxChange(e, "senior")}
               ></input>
               <p>Senior</p>
+              <span
+                className={
+                  "rounded-full ml-auto mt-1 opacity-75 size-4 bg-red-500"
+                }
+              ></span>
             </div>
 
             <p className="font-semibold pb-2 mt-5">Salaire minimum</p>
