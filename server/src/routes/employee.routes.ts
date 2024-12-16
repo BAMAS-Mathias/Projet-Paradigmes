@@ -1,5 +1,5 @@
 import * as express from "express";
-import { ObjectId } from "mongodb";
+import { MongoError, ObjectId } from "mongodb";
 import { collections } from "../database";
 
 export const employeeRouter = express.Router();
@@ -35,13 +35,12 @@ employeeRouter.get("/:id", async (req, res) => {
 // 🟡 POST /employees - Créer un nouvel employé
 employeeRouter.post("/", async (req, res) => {
   try {
-    console.log(req.body);
     const newEmployee = req.body;
     const result = await collections?.employees?.insertOne(newEmployee);
     res.status(201).send(result);
-  } catch (error) {
-    console.log(error);
+  } catch (error: MongoError | any) {
     res.status(400).send({ error: error });
+    console.log(error.errInfo.details.schemaRulesNotSatisfied[0]);
   }
 });
 
@@ -61,36 +60,49 @@ employeeRouter.put("/:id", async (req, res) => {
 });
 
 // ⚫ DELETE /employees/:id - Supprimer un employé
-employeeRouter.delete('/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const result = await collections?.employees?.deleteOne({ _id: new ObjectId(id) });
-        res.status(202).send(result);
-    } catch (error) {
-        res.status(400).send('Error deleting employee');
-    }
-})
-
-employeeRouter.get('/stats/count', async (_req, res) => {
-    try {
-        const count = await collections?.employees?.countDocuments();
-        res.status(200).send({ total: count });
-    } catch (error) {
-        res.status(500).send('Error counting employees');
-    }
+employeeRouter.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await collections?.employees?.deleteOne({
+      _id: new ObjectId(id),
+    });
+    res.status(202).send(result);
+  } catch (error) {
+    res.status(400).send("Error deleting employee");
+  }
 });
-employeeRouter.get('/search', async (req, res) => {
-    try {
-        const { name, position } = req.query;
-        const query: any = {};
-        if (name) query.name = { $regex: name, $options: 'i' }; // Recherche partielle
-        if (position) query.position = { $regex: position, $options: 'i' };
 
-        const employees = await collections?.employees?.find(query).toArray();
-        res.status(200).send(employees);
-    } catch (error) {
-        res.status(500).send('Error searching for employees');
-    }
+employeeRouter.get("/stats/count", async (_req, res) => {
+  try {
+    const count = await collections?.employees?.countDocuments();
+    res.status(200).send({ total: count });
+  } catch (error) {
+    res.status(500).send("Error counting employees");
+  }
 });
-    
-    
+
+employeeRouter.post("/search", async (req, res) => {
+  try {
+    const { poste, level, salaire } = req.body;
+    const query: any = {};
+
+    if (poste && poste.length > 0) {
+      query.position = { $regex: ".*" + poste + ".*", $options: "i" };
+    }
+
+    if (level && level.length > 0) {
+      query.level = { $in: level };
+    }
+
+    if (salaire && salaire.min && salaire.max && salaire.min <= salaire.max) {
+      query["salary.min"] = { $gte: salaire.min };
+      query["salary.max"] = { $gte: salaire.max };
+    }
+
+    const employees = await collections?.employees?.find(query).toArray();
+    res.status(200).send(employees);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error searching for employees");
+  }
+});

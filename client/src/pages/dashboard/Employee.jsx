@@ -1,30 +1,50 @@
+import "./employee.css";
+
 const Employee = ({ employee, onclick }) => {
   const levelColor = {
-    mid: "bg-yellow-500",
-    junior: "bg-green-500",
-    senior: "bg-red-500",
+    mid: "yellow-500",
+    junior: "green-500",
+    senior: "red-500",
   };
   return (
     <div
-      className="flex size-64 bg-white bg-opacity-10 rounded h-[100px] w-[450px] flex-col py-4 px-4 cursor-pointer hover:bg-opacity-20   transition-all "
+      className="flex size-64 bg-white text-[#100e0e] rounded h-[250px] w-full flex-col py-6 px-6 cursor-pointer transition-all "
       onClick={onclick}
     >
-      <div className="flex justify-between">
-        <div className="">
-          <p className="font-bold text-xl">{employee.name}</p>
-          <p className="opacity-70 text-sm">{employee.surname}</p>
+      <div className="flex gap-2">
+        <p className="bg-red-500 font-extrabold w-10 py-2 h-fit  rounded-full bg-opacity-25 text-center">
+          {employee.name[0].toUpperCase()}
+        </p>
+        <div className="flex flex-col">
+          <div className="flex justify-between">
+            <div className="flex gap-2 items-center">
+              <p className="font-medium">{employee.name}</p>
+              <p className="opacity-70 text-sm">{employee.surname}</p>
+            </div>
+          </div>
+          <p className=" text-sm opacity-60">{employee.position}</p>
         </div>
-        <p
+
+        <span
           className={
-            "px-10 text-sm py-1 rounded font-medium " +
+            "rounded-full ml-auto mt-1 opacity-75 size-4 bg-" +
             levelColor[employee.level]
           }
-        >
-          {employee.level}
-        </p>
+        ></span>
       </div>
-      <p>{employee.salary}</p>
-      <p>{employee.position}</p>
+      <p className="mt-5 text-sm font-medium">{employee.description}</p>
+
+      <div className="flex mt-auto gap-2">
+        <div className="flex">
+          <p className="font-semibold">{employee.salary?.min + "€"}</p>
+          <p className="opacity-70">{"/an"}</p>
+        </div>
+        à
+        <div className="flex">
+          <p className="font-semibold">{employee.salary?.max + "€"}</p>
+          <p className="opacity-70">{"/an"}</p>
+        </div>
+      </div>
     </div>
   );
 };

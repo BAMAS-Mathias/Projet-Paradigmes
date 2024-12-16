@@ -1,29 +1,49 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import Input from "./Input";
 
 const CreateEmployee = () => {
+  const [sucessMessage, setSucessMessage] = useState("");
   const [employee, setEmployee] = React.useState({
     name: "",
     position: "",
     level: "",
-    salary: Number,
+    salary: {
+      min: 0,
+      max: 0,
+    },
     description: "",
     surname: "",
   });
 
   const [isCreating, setIsCreating] = useState(false);
 
-  const createEmployee = (nom, position, level) => {
+  const createEmployee = (
+    nom,
+    prenom,
+    position,
+    level,
+    salaryMin,
+    salaryMax,
+    description
+  ) => {
     setIsCreating(true);
     axios
       .post(import.meta.env.VITE_API_URL + "/employees/", {
         name: nom,
         position: position,
         level: level.toLowerCase(),
+        salary: {
+          min: parseInt(salaryMin),
+          max: parseInt(salaryMax),
+        },
+        description: description,
+        surname: prenom,
       })
       .then(() => {
         setIsCreating(false);
+        setSucessMessage("Employé créé avec succès");
       })
       .catch((error) => {
         setIsCreating(false);
@@ -36,47 +56,44 @@ const CreateEmployee = () => {
   };
 
   return (
-    <form className="flex flex-col p-5 gap-y-2 w-fit">
-      <p className="font-bold text-2xl self-center mb-2">Créer un employé</p>
-      <input
-        type="text"
-        name="name"
-        placeholder="Nom"
-        onChange={handleChange}
-        className="w-max text-[#000000] rounded-md p-1"
-      />
-      <input
-        type="text"
-        name="surname"
-        placeholder="Prénom"
-        className="w-max text-[#000000] rounded-md p-1"
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        name="salary"
-        placeholder="Salaire"
-        className="w-max text-[#000000] rounded-md p-1"
+    <form className="flex flex-col p-5 gap-y-2 w-full justify-center items-center ">
+      <p className="font-bold text-2xl self-center mb-2 text-[#100e0e]">
+        Créer un employé
+      </p>
+      {sucessMessage && (
+        <p className="w-[400px] bg-green-600">{sucessMessage}</p>
+      )}
+      <p className="text-[#100e0e] font-semibold">Information personnel</p>
+      <Input name={"name"} placeholder={"Nom"} onChange={handleChange} />
+      <Input name={"surname"} placeholder={"Prénom"} onChange={handleChange} />
+
+      <p className="text-[#100e0e] font-semibold mt-3">Salaire</p>
+      <Input
+        type="number"
+        name={"salaryMin"}
+        placeholder={"Salaire min"}
         onChange={handleChange}
       />
-      <input
-        type="text"
-        name="position"
-        placeholder="Position"
-        className="w-max text-[#000000] rounded-md p-1"
+      <Input
+        type="number"
+        name={"salaryMax"}
+        placeholder={"Salaire max"}
         onChange={handleChange}
       />
-      <input
-        type="text"
+
+      <p className="text-[#100e0e] font-semibold">Information emplois</p>
+      <Input name={"position"} placeholder={"Poste"} onChange={handleChange} />
+      <textarea
+        onChange={handleChange}
         name="description"
         placeholder="Description"
-        className="w-max text-[#000000] rounded-md p-1"
-        onChange={handleChange}
-      />
+        className="w-[400px] text-black rounded-md p-1"
+      ></textarea>
+
       <select
         name="level"
         onChange={handleChange}
-        className="w-max text-[#000000] rounded-md p-1"
+        className="w-max text-[#000000] rounded-md p-1 w-[400px]"
       >
         <option value="">Select Level</option>
         <option value="junior">Junior</option>
@@ -86,11 +103,19 @@ const CreateEmployee = () => {
       <button
         type="button"
         className={
-          "w-full self-center mt-2 bg-white bg-opacity-10 rounded-lg p-2 " +
+          " self-center mt-2 bg-[#0084f8] w-[400px]  rounded-lg p-2 " +
           (isCreating && "opacity-50")
         }
         onClick={() =>
-          createEmployee(employee.name, employee.position, employee.level)
+          createEmployee(
+            employee.name,
+            employee.surname,
+            employee.position,
+            employee.level,
+            employee.salaryMin,
+            employee.salaryMax,
+            employee.description
+          )
         }
       >
         {isCreating ? "Création..." : "Créer"}

@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import "./App.css";
-import Dashboard from "./pages/dashboard/Dashboard";
 import Layout from "./layout/Layout";
 import CreateEmployee from "./pages/createEmployee/CreateEmployee";
+import Dashboard from "./pages/dashboard2/Dashboard";
 
 function App() {
   return (
