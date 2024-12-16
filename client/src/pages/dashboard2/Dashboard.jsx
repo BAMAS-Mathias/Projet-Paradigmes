@@ -46,6 +46,17 @@ const Dashboard = () => {
     });
   };
 
+  const handleDeleteEmployee = (id) => {
+    axios
+      .delete(import.meta.env.VITE_API_URL + "/employees/" + id)
+      .then(() => {
+        setUserList(userList.filter((employee) => employee._id !== id));
+      })
+      .catch((error) => {
+        console.error("Error deleting employee: ", error);
+      });
+  };
+
   useEffect(() => {
     handleSearch();
   }, [experienceFilter, salaireMin, salaireMax, poste]);
@@ -166,7 +177,11 @@ const Dashboard = () => {
         <div className="h-full w-full px-4 py-4 pr-16 ">
           <div className="employee-grid">
             {userList.map((employee, index) => (
-              <Employee key={index} employee={employee} />
+              <Employee
+                key={index}
+                employee={employee}
+                handleDeleteEmployee={handleDeleteEmployee}
+              />
             ))}
           </div>
         </div>

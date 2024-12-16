@@ -1,0 +1,59 @@
+import React from 'react'
+
+const EmployeeInfo = ({employee, onclick, setDeleting}) => {
+    const levelColor = {
+        mid: "yellow-500",
+        junior: "green-500",
+        senior: "red-500",
+      };
+
+  return (
+    <>
+    <div className="flex gap-2">
+        <p className="bg-red-500 font-extrabold w-10 py-2 h-fit  rounded-full bg-opacity-25 text-center">
+          {employee.name[0].toUpperCase()}
+        </p>
+        <div className="flex flex-col">
+          <div className="flex justify-between">
+            <div className="flex gap-2 items-center">
+              <p className="font-medium">{employee.name}</p>
+              <p className="opacity-70 text-sm">{employee.surname}</p>
+            </div>
+          </div>
+          <p className=" text-sm opacity-60">{employee.position}</p>
+        </div>
+
+        <span
+          className={
+            "rounded-full ml-auto mt-1 opacity-75 size-4 bg-" +
+            levelColor[employee.level]
+          }
+        ></span>
+      </div>
+      <p className="mt-5 text-sm font-medium">{employee.description}</p>
+
+      <div className="flex mt-auto gap-2">
+        <div className="flex">
+          <p className="font-semibold">{employee.salary?.min + "€"}</p>
+          <p className="opacity-70">{"/an"}</p>
+        </div>
+        à
+        <div className="flex">
+          <p className="font-semibold">{employee.salary?.max + "€"}</p>
+          <p className="opacity-70">{"/an"}</p>
+        </div>
+        <svg
+          onClick={setDeleting}
+          className="size-6 fill-red-500 ml-auto z-90"
+          viewBox="0 -960 960 960"
+        >
+          <path d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm-40-120h80v-200h-80v200Zm40-100Z" />
+        </svg>
+
+        
+      </div>
+      </>
+  )
+}
+
+export default EmployeeInfo
