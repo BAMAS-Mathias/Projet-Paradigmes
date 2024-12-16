@@ -62,4 +62,28 @@ employeeRouter.delete('/:id', async (req, res) => {
     } catch (error) {
         res.status(400).send('Error deleting employee');
     }
+    employeeRouter.get('/search', async (req, res) => {
+        try {
+            const { name, position } = req.query;
+            const query: any = {};
+            if (name) query.name = { $regex: name, $options: 'i' }; // Recherche partielle
+            if (position) query.position = { $regex: position, $options: 'i' };
+    
+            const employees = await collections?.employees?.find(query).toArray();
+            res.status(200).send(employees);
+        } catch (error) {
+            res.status(500).send('Error searching for employees');
+        }
+    });
+
+    employeeRouter.get('/stats/count', async (_req, res) => {
+        try {
+            const count = await collections?.employees?.countDocuments();
+            res.status(200).send({ total: count });
+        } catch (error) {
+            res.status(500).send('Error counting employees');
+        }
+    });
+    
+    
 });
