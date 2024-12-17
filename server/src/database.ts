@@ -22,7 +22,7 @@ async function applySchemaValidation(db: mongodb.Db) {
   const jsonSchema = {
     $jsonSchema: {
       bsonType: "object",
-      required: ["name", "position", "level"],
+      required: ["name", "surname", "position", "level", "salary"],
       additionalProperties: false,
       properties: {
         _id: {},
@@ -39,11 +39,13 @@ async function applySchemaValidation(db: mongodb.Db) {
           required: ["min", "max"],
           properties: {
             min: {
-              bsonType: "int", // or "double" if you expect floating point numbers
+              bsonType: "int", 
+              min: 0,
               description: "'salary.min' is required and is a number",
             },
             max: {
               bsonType: "int", // or "double" if you expect floating point numbers
+              min: 0,
               description: "'salary.max' is required and is a number",
             },
           },

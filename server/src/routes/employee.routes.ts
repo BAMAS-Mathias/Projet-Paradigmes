@@ -99,12 +99,12 @@ employeeRouter.post("/search", async (req, res) => {
       query["salary.max"] = { $gte: salaire.max };
     }
 
-    if(telework){
-      query.teletravail = telework;
+    if (telework) {
+      query.telework = telework;
     }
 
-    if(city){
-      query.ville = {$regex: ".*" + city + ".*", $options: "i"};
+    if (city) {
+      query.city = { $regex: ".*" + city + ".*", $options: "i" };
     }
 
     const employees = await collections?.employees?.find(query).toArray();
