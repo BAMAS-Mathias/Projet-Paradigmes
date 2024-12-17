@@ -7,6 +7,8 @@ export interface Employee {
     description: string;
     datecreate: Date;
     position: string;
+    ville: string;
+    teletravail: boolean;
     level: "junior" | "mid" | "senior";
     _id?: mongodb.ObjectId;
 }

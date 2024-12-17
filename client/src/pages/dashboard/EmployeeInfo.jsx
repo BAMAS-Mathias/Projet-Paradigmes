@@ -1,15 +1,15 @@
-import React from 'react'
+import React from "react";
 
-const EmployeeInfo = ({employee, onclick, setDeleting}) => {
-    const levelColor = {
-        mid: "yellow-500",
-        junior: "green-500",
-        senior: "red-500",
-      };
+const EmployeeInfo = ({ employee, onclick, setDeleting }) => {
+  const levelColor = {
+    mid: "yellow-500",
+    junior: "green-500",
+    senior: "red-500",
+  };
 
   return (
     <>
-    <div className="flex gap-2">
+      <div className="flex gap-2" onClick={setDeleting}>
         <p className="bg-red-500 font-extrabold w-10 py-2 h-fit  rounded-full bg-opacity-25 text-center">
           {employee.name[0].toUpperCase()}
         </p>
@@ -30,30 +30,33 @@ const EmployeeInfo = ({employee, onclick, setDeleting}) => {
           }
         ></span>
       </div>
-      <p className="mt-5 text-sm font-medium">{employee.description}</p>
+      {!employee.telework && (
+        <p className="bg-yellow-500 bg-opacity-20 px-4 w-fit text-xs py-[2px] font-medium rounded-full mt-2">
+          Télétravail
+        </p>
+      )}
+      <p className="mt-2 text-sm font-medium">{employee.description}</p>
 
-      <div className="flex mt-auto gap-2">
+      <div className="flex gap-1 mt-auto items-center">
         <div className="flex">
-          <p className="font-semibold">{employee.salary?.min + "€"}</p>
+          <p className="font-semibold">
+            {employee.salary?.min.toString() + "€"}
+          </p>
           <p className="opacity-70">{"/an"}</p>
         </div>
         à
         <div className="flex">
-          <p className="font-semibold">{employee.salary?.max + "€"}</p>
+          <p className="font-semibold">
+            {employee.salary?.max.toString() + "€"}
+          </p>
           <p className="opacity-70">{"/an"}</p>
         </div>
-        <svg
-          onClick={setDeleting}
-          className="size-6 fill-red-500 ml-auto z-90"
-          viewBox="0 -960 960 960"
-        >
-          <path d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm-40-120h80v-200h-80v200Zm40-100Z" />
-        </svg>
-
-        
+        <p className="text-xs ml-auto opacity-80 font-medium">
+          {employee.city}
+        </p>
       </div>
-      </>
-  )
-}
+    </>
+  );
+};
 
-export default EmployeeInfo
+export default EmployeeInfo;
