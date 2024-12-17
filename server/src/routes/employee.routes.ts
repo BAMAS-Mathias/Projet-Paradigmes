@@ -83,7 +83,7 @@ employeeRouter.get("/stats/count", async (_req, res) => {
 
 employeeRouter.post("/search", async (req, res) => {
   try {
-    const { poste, level, salaire } = req.body;
+    const { poste, level, salaire, telework, city } = req.body;
     const query: any = {};
 
     if (poste && poste.length > 0) {
@@ -97,6 +97,14 @@ employeeRouter.post("/search", async (req, res) => {
     if (salaire && salaire.min && salaire.max && salaire.min <= salaire.max) {
       query["salary.min"] = { $gte: salaire.min };
       query["salary.max"] = { $gte: salaire.max };
+    }
+
+    if(telework){
+      query.teletravail = telework;
+    }
+
+    if(city){
+      query.ville = {$regex: ".*" + city + ".*", $options: "i"};
     }
 
     const employees = await collections?.employees?.find(query).toArray();

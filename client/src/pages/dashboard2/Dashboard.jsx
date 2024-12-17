@@ -6,8 +6,10 @@ const Dashboard = () => {
   const [userList, setUserList] = useState([]);
   const [poste, setPoste] = useState("");
   const [salaireMin, setSalaireMin] = useState(0);
+  const [teletravail, setTeletravail] = useState(false);
   const [salaireMax, setSalaireMax] = useState(0);
   const [experienceFilter, setExperienceFilter] = useState([]);
+  const [city, setCity] = useState("");
 
   useEffect(() => {
     axios
@@ -29,6 +31,8 @@ const Dashboard = () => {
           max: parseInt(salaireMax),
         },
         poste: poste,
+        telework: teletravail,
+        city: city,
       })
       .then((response) => {
         setUserList(response.data);
@@ -59,7 +63,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [experienceFilter, salaireMin, salaireMax, poste]);
+  }, [experienceFilter, salaireMin, salaireMax, poste, teletravail, city]);
 
   return (
     <>
@@ -152,18 +156,36 @@ const Dashboard = () => {
               ></span>
             </div>
 
-            <p className="font-semibold pb-2 mt-5">Salaire minimum</p>
+            <p className="font-semibold pb-1 mt-5">Salaire minimum</p>
             <input
-              className="px-2"
+              className="px-2 py-2 w-full"
               type="number"
               onChange={(e) => setSalaireMin(e.target.value)}
             ></input>
 
-            <p className="font-semibold pb-2 mt-5">Salaire maximum</p>
+            <p className="font-semibold pb-1 mt-5">Salaire maximum</p>
             <input
-              className="px-2"
+              className="px-2 py-2 w-full"
               type="number"
               onChange={(e) => setSalaireMax(e.target.value)}
+            ></input>
+
+            <p className="font-semibold pb-1 mt-5">Teletravail</p>
+            <div className="flex items-center gap-2 text-sm">
+              <input
+                className="rounded "
+                type="checkbox"
+                onChange={(e) => setTeletravail(!teletravail)}
+              ></input>
+              <p>Télétravail possible</p>
+            </div>
+
+            <p className="font-semibold pb-2 mt-5">Ville</p>
+            <input
+              className="px-2 py-2 w-full"
+              type="text"
+              placeholder="Paris"
+              onChange={(e) => setCity(e.target.value)}
             ></input>
 
             <button

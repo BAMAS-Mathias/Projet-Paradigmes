@@ -61,11 +61,18 @@ async function applySchemaValidation(db: mongodb.Db) {
             "'level' is required and is one of 'junior', 'mid', or 'senior'",
           enum: ["junior", "mid", "senior"],
         },
+        city: {
+          bsonType: "string",
+          description: "'ville' is required and is a string",
+        },
+        telework: {
+          bsonType: "bool",
+          description: "'teletravail' is required and is a boolean",
+        },
       },
     },
   };
 
-  // Try applying the modification to the collection, if the collection doesn't exist, create it
   await db
     .command({
       collMod: "employees",
