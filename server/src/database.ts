@@ -14,6 +14,8 @@ export async function connectToDatabase(uri: string) {
 
   const employeesCollection = db.collection<Employee>("employees");
   collections.employees = employeesCollection;
+  collections.employees.createIndex({ position: 1 }, {name: "position_idx"});
+  collections.employees.createIndex({ city: 1 }, {name: "city_idx"});
 }
 
 async function applySchemaValidation(db: mongodb.Db) {
@@ -61,11 +63,18 @@ async function applySchemaValidation(db: mongodb.Db) {
             "'level' is required and is one of 'junior', 'mid', or 'senior'",
           enum: ["junior", "mid", "senior"],
         },
+        city: {
+          bsonType: "string",
+          description: "'ville' is required and is a string",
+        },
+        telework: {
+          bsonType: "bool",
+          description: "'teletravail' is required and is a boolean",
+        },
       },
     },
   };
 
-  // Try applying the modification to the collection, if the collection doesn't exist, create it
   await db
     .command({
       collMod: "employees",
