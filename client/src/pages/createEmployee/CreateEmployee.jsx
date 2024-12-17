@@ -15,6 +15,8 @@ const CreateEmployee = () => {
     },
     description: "",
     surname: "",
+    city: "",
+    telework: false,
   });
 
   const [isCreating, setIsCreating] = useState(false);
@@ -26,7 +28,9 @@ const CreateEmployee = () => {
     level,
     salaryMin,
     salaryMax,
-    description
+    description,
+    city,
+    telework
   ) => {
     setIsCreating(true);
     axios
@@ -40,6 +44,8 @@ const CreateEmployee = () => {
         },
         description: description,
         surname: prenom,
+        city: city,
+        telework: telework,
       })
       .then(() => {
         setIsCreating(false);
@@ -51,8 +57,9 @@ const CreateEmployee = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEmployee({ ...employee, [name]: value });
+    const { name, value, checked } = e.target;
+    setEmployee({ ...employee, [name]: value, telework: checked });
+    console.log(employee.telework);
   };
 
   return (
@@ -66,6 +73,14 @@ const CreateEmployee = () => {
       <p className="text-[#100e0e] font-semibold">Information personnel</p>
       <Input name={"name"} placeholder={"Nom"} onChange={handleChange} />
       <Input name={"surname"} placeholder={"Prénom"} onChange={handleChange} />
+      <Input name={"city"} placeholder={"Ville"} onChange={handleChange} />
+      <p className="text-[#100e0e] font-semibold mt-3">Télétravail</p>
+      <Input
+        type="checkbox"
+        name={"telework"}
+        onChange={handleChange}
+        checked={employee.telework}
+      />
 
       <p className="text-[#100e0e] font-semibold mt-3">Salaire</p>
       <Input
