@@ -57,8 +57,8 @@ const CreateEmployee = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value, checked } = e.target;
-    setEmployee({ ...employee, [name]: value, telework: checked });
+    const { name, value } = e.target;
+    setEmployee({ ...employee, [name]: value });
     console.log(employee.telework);
   };
 
@@ -78,7 +78,9 @@ const CreateEmployee = () => {
       <Input
         type="checkbox"
         name={"telework"}
-        onChange={handleChange}
+        onChange={() =>
+          setEmployee({ ...employee, telework: !employee.telework })
+        }
         checked={employee.telework}
       />
 
@@ -129,7 +131,9 @@ const CreateEmployee = () => {
             employee.level,
             employee.salaryMin,
             employee.salaryMax,
-            employee.description
+            employee.description,
+            employee.city,
+            employee.telework,
           )
         }
       >
