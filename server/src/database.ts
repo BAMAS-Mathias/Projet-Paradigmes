@@ -14,6 +14,8 @@ export async function connectToDatabase(uri: string) {
 
   const employeesCollection = db.collection<Employee>("employees");
   collections.employees = employeesCollection;
+  collections.employees.createIndex({ position: 1 }, {name: "position_idx"});
+  collections.employees.createIndex({ city: 1 }, {name: "city_idx"});
 }
 
 async function applySchemaValidation(db: mongodb.Db) {

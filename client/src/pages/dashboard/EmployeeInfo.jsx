@@ -30,7 +30,7 @@ const EmployeeInfo = ({ employee, onclick, setDeleting }) => {
           }
         ></span>
       </div>
-      {!employee.telework && (
+      {employee.telework && (
         <p className="bg-yellow-500 bg-opacity-20 px-4 w-fit text-xs py-[2px] font-medium rounded-full mt-2">
           Télétravail
         </p>
