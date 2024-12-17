@@ -3,6 +3,7 @@ import "./App.css";
 import Layout from "./layout/Layout";
 import CreateEmployee from "./pages/createEmployee/CreateEmployee";
 import Dashboard from "./pages/dashboard2/Dashboard";
+import EmployeeEdit from "./pages/dashboard2/EmployeeEdit";
 
 function App() {
   return (
@@ -25,6 +26,14 @@ function App() {
               </Layout>
             }
           ></Route>
+          <Route
+           path="/employee/edit"
+           element={
+             <Layout>
+               <EmployeeEdit/>
+             </Layout>
+           }
+         ></Route>
         </Routes>
       </BrowserRouter>
     </>
