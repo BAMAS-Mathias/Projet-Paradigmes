@@ -9,20 +9,20 @@ export async function connectToDatabase(uri: string) {
   const client = new mongodb.MongoClient(uri);
   await client.connect();
 
-  const db = client.db("meanStackExample");
+  const db = client.db("employeesdb");
   await applySchemaValidation(db);
 
   const employeesCollection = db.collection<Employee>("employees");
   collections.employees = employeesCollection;
-  collections.employees.createIndex({ position: 1 }, {name: "position_idx"});
-  collections.employees.createIndex({ city: 1 }, {name: "city_idx"});
+  collections.employees.createIndex({ position: 1 }, { name: "position_idx" });
+  collections.employees.createIndex({ city: 1 }, { name: "city_idx" });
 }
 
 async function applySchemaValidation(db: mongodb.Db) {
   const jsonSchema = {
     $jsonSchema: {
       bsonType: "object",
-      required: ["name", "surname", "position", "level", "salary"],
+      required: ["name", "surname", "position", "level"],
       additionalProperties: false,
       properties: {
         _id: {},
@@ -39,13 +39,13 @@ async function applySchemaValidation(db: mongodb.Db) {
           required: ["min", "max"],
           properties: {
             min: {
-              bsonType: "int", 
-              min: 0,
+              bsonType: "int",
+              minimum: 0,
               description: "'salary.min' is required and is a number",
             },
             max: {
-              bsonType: "int", // or "double" if you expect floating point numbers
-              min: 0,
+              bsonType: "int",
+              minimum: 0,
               description: "'salary.max' is required and is a number",
             },
           },

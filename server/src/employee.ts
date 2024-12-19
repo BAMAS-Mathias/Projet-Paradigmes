@@ -3,7 +3,10 @@ import * as mongodb from "mongodb";
 export interface Employee {
   name: string;
   surname: string;
-  salary: Number;
+  salary: {
+    min: number;
+    max: number;
+  };
   description: string;
   datecreate: Date;
   position: string;
