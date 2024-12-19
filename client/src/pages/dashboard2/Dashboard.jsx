@@ -10,6 +10,8 @@ const Dashboard = () => {
   const [salaireMax, setSalaireMax] = useState(0);
   const [experienceFilter, setExperienceFilter] = useState([]);
   const [city, setCity] = useState("");
+  const [champTri, setChampTri] = useState("name");
+  const [ordreTri, setOrdreTri] = useState("asc");
 
   useEffect(() => {
     axios
@@ -33,6 +35,10 @@ const Dashboard = () => {
         poste: poste,
         telework: teletravail,
         city: city,
+        sort: {
+          field: champTri,
+          order: ordreTri,
+        },
       })
       .then((response) => {
         setUserList(response.data);
@@ -63,7 +69,16 @@ const Dashboard = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [experienceFilter, salaireMin, salaireMax, poste, teletravail, city]);
+  }, [
+    experienceFilter,
+    salaireMin,
+    salaireMax,
+    poste,
+    teletravail,
+    city,
+    champTri,
+    ordreTri,
+  ]);
 
   return (
     <>
@@ -109,9 +124,33 @@ const Dashboard = () => {
           ></img>
         </div>
       </div>
-      <p className="px-12 py-10 text-2xl font-semibold text-[#100e0e] ">
-        Liste des employés ({userList.length})
-      </p>
+      <div className="flex items-center w-full justify-between pr-16 text-[#100e0e]">
+        <p className="px-12 py-10 text-2xl font-semibold  ">
+          Liste des employés ({userList.length})
+        </p>
+        <div className="flex gap-2">
+          <p>Trié par</p>
+          <select
+            className="border-2 border-opacity-0"
+            onChange={(e) => setChampTri(e.target.value)}
+          >
+            <option value={"name"}>Nom</option>
+            <option value={"surname"}>Prenom</option>
+            <option value={"position"}>Poste</option>
+            <option value={"salary.min"}>Salaire Min</option>
+            <option value={"salary.max"}>Salaire Max</option>
+            <option value={"city"}>Ville</option>
+            <option value={"telework"}>Teletravail</option>
+          </select>
+          <select
+            className="border-2 border-opacity-0"
+            onChange={(e) => setOrdreTri(e.target.value)}
+          >
+            <option value={"asc"}>Ascendant</option>
+            <option value={"desc"}>Descendant</option>
+          </select>
+        </div>
+      </div>
       <div className="w-full h-screen flex">
         <div className="h-full w-[25%] text-[#100e0e] ">
           <div className="pl-12 pr-4">
@@ -187,13 +226,6 @@ const Dashboard = () => {
               placeholder="Paris"
               onChange={(e) => setCity(e.target.value)}
             ></input>
-
-            <button
-              onClick={handleSearch}
-              className="w-full bg-[#0084f8] text-white text-sm py-2 mt-4 rounded"
-            >
-              Rechercher
-            </button>
           </div>
         </div>
         <div className="h-full w-full px-4 py-4 pr-16 ">

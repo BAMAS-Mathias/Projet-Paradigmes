@@ -83,8 +83,9 @@ employeeRouter.get("/stats/count", async (_req, res) => {
 
 employeeRouter.post("/search", async (req, res) => {
   try {
-    const { poste, level, salaire, telework, city } = req.body;
+    const { poste, level, salaire, telework, city, sort } = req.body;
     const query: any = {};
+    const sortQuery: any = {};
 
     if (poste && poste.length > 0) {
       query.position = { $regex: ".*" + poste + ".*", $options: "i" };
@@ -107,7 +108,14 @@ employeeRouter.post("/search", async (req, res) => {
       query.city = { $regex: ".*" + city + ".*", $options: "i" };
     }
 
-    const employees = await collections?.employees?.find(query).toArray();
+    if (sort && sort.field && sort.order) {
+      sortQuery[sort.field] = sort.order === "asc" ? 1 : -1;
+    }
+
+    const employees = await collections?.employees
+      ?.find(query)
+      .sort(sortQuery)
+      .toArray();
     res.status(200).send(employees);
   } catch (error) {
     console.log(error);
